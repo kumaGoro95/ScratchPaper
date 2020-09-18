@@ -43,8 +43,11 @@ public class LoginServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginSuccess.jsp");
 			dispatcher.forward(request, response);
 		}else { //ログイン失敗時
-			//リダイレクト
-			response.sendRedirect("/testJavaApp/LoginServlet");
+			//エラーメッセージをリクエストスコープに保存
+			request.setAttribute("errorMsg", "ユーザー名、またはパスワードが間違っています");
+			//フォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
+			dispatcher.forward(request, response);
 		}
 
 	}
