@@ -7,7 +7,10 @@
 <title>テストアプリ</title>
 </head>
 <body>
-<p>ようこそ{ユーザーID}さん</p>
-<a href="/testJavaApp/IndexServlet">トップへ</a>
+<form action="/testJavaApp/LoginServlet" method="post">
+名前:<input type="text" name="name"><br>
+パスワード:<input type="password" name="pass"><br>
+<input type="submit" value="ログイン">
+</form>
 </body>
 </html>
