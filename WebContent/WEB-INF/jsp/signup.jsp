@@ -5,16 +5,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>テストアプリ</title>
+<title>Insert title here</title>
 </head>
 <body>
-<form action="/testJavaApp/LoginServlet" method="post">
+<form action="/testJavaApp/SignupServlet" method="post">
 <c:if test="${not empty errorMsg}">
 <c:out value="${errorMsg}" />
-</c:if><br>
+</c:if>
+<c:if test="${empty errorMsg}">
+名前は4文字以上
+パスワードは半角英数字4文字以上で入力
+</c:if>
+<br><br>
 名前:<input type="text" name="name"><br>
 パスワード:<input type="password" name="pass"><br>
-<input type="submit" value="ログイン">
+<input type="submit" value="登録">
 </form><br>
 <a href="/testJavaApp/IndexServlet">トップへ</a>
 </body>
