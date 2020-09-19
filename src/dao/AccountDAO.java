@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import model.Account;
 import model.Login;
+import model.Signup;
 
 public class AccountDAO {
 	//データベース接続に使用する情報
@@ -44,6 +45,46 @@ public class AccountDAO {
 			return null;
 		}
 		//見つかったユーザー、またはnullを返す
+		return account;
+		}
+
+	public Account signupAccount(Signup signup) {
+		Account account = null;
+
+		//データベースへ接続
+		try(Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			//INSERT文を準備
+			String insertSql = "INSERT INTO ACCOUNT(PASS, NAME) VALUES(?, ?)";
+			PreparedStatement pStmt1 = conn.prepareStatement(insertSql);
+			pStmt1.setString(1, signup.getPass());
+			pStmt1.setString(2, signup.getName());
+
+			//INSERT文を実行
+			int result = pStmt1.executeUpdate();
+
+			//SELECT文を準備
+			String selectSql = "SELECT USER_ID, PASS, NAME FROM ACCOUNT WHERE PASS = ? AND NAME = ?";
+			PreparedStatement pStmt2 = conn.prepareStatement(selectSql);
+			pStmt2.setString(1, signup.getPass());
+			pStmt2.setString(2, signup.getName());
+
+			//INSERT文を実行し、結果表を取得
+			ResultSet rs2 = pStmt2.executeQuery();
+
+			//そのユーザーを表すAccountインスタンスを生成
+			if(rs2.next()) {
+				//結果表からデータを取得
+				String userId = rs2.getString("USER_ID");
+				String pass = rs2.getNString("PASS");
+				String name = rs2.getNString("NAME");
+				account = new Account(userId, pass, name);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+		//作成したユーザー、またはnullを返す
 		return account;
 		}
 

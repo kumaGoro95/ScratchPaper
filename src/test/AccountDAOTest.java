@@ -4,11 +4,13 @@ package test;
 import dao.AccountDAO;
 import model.Account;
 import model.Login;
+import model.Signup;
 
 public class AccountDAOTest{
 	public static void main(String [] args) {
 		testFindByLogin1();  //ユーザーが見つかる場合のテスト
 		testFindByLogic2(); //ユーザーが見つからない場合のテスト
+		testSignupAccountLogic1();  //ユーザー作成のテスト
 	}
 
 	public static void testFindByLogin1() {
@@ -30,6 +32,17 @@ public class AccountDAOTest{
 			System.out.println("testFindByLogin2:成功しました");
 		}else {
 			System.out.println("testFindByLogin2:失敗しました");
+		}
+	}
+
+	public static void testSignupAccountLogic1() {
+		Signup signup = new Signup("monokuma", "1313");
+		AccountDAO dao = new AccountDAO();
+		Account result = dao.signupAccount(signup);
+		if(result != null && result.getName().equals("monokuma") && result.getPass().equals("1313")){
+			System.out.println("testSignupAccountLogic1:成功しました");
+		}else {
+			System.out.println("testSignupAccountLogic1:失敗しました");
 		}
 	}
 }
