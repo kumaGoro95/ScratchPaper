@@ -9,7 +9,7 @@
 <body>
 <ul>
 <li><a href="/testJavaApp/LoginServlet">ログイン</a></li>
-<li><a href="testJavaApp/SignupServlet">ユーザー登録</a></li>
+<li><a href="/testJavaApp/SignupServlet">ユーザー登録</a></li>
 </ul>
 </body>
 </html>

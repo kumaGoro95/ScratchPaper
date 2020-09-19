@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/testJavaApp/LoginServlet" method="post">
+<form action="/testJavaApp/SignupServlet" method="post">
 <c:if test="${not empty errorMsg}">
 <c:out value="${errorMsg}" />
 </c:if>
@@ -20,6 +20,7 @@
 名前:<input type="text" name="name"><br>
 パスワード:<input type="password" name="pass"><br>
 <input type="submit" value="登録">
-</form>
+</form><br>
+<a href="/testJavaApp/IndexServlet">トップへ</a>
 </body>
 </html>

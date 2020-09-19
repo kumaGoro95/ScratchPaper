@@ -15,6 +15,7 @@
 名前:<input type="text" name="name"><br>
 パスワード:<input type="password" name="pass"><br>
 <input type="submit" value="ログイン">
-</form>
+</form><br>
+<a href="/testJavaApp/IndexServlet">トップへ</a>
 </body>
 </html>

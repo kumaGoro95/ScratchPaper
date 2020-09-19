@@ -8,11 +8,8 @@
 <title>テストアプリ</title>
 </head>
 <body>
-<c:if test="${not empty errorMsg}">
-<c:out value="${errorMsg}" />
-</c:if><br>
+<h1>登録完了</h1><br>
 <p>ようこそ<c:out value="${name}" />さん</p>
-<a href="/testJavaApp/IndexServlet">トップへ</a>
 <a href="/testJavaApp/LogoutServlet">ログアウト</a>
 </body>
 </html>
