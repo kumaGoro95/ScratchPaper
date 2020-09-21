@@ -1,7 +1,7 @@
 package test;
 
-import model.Login;
 import model.LoginLogic;
+import model.User;
 
 public class LoginLogicTest {
 	public static void main(String[] args) {
@@ -9,9 +9,9 @@ public class LoginLogicTest {
 		testExecute2();  //ログイン失敗のテスト
 	}
 	public static void testExecute1() {
-		Login login = new Login("kumagoro", "1234");
+		User user = new User("kumagoro", "1234");
 		LoginLogic bo = new LoginLogic();
-		boolean result = bo.execute(login);
+		boolean result = bo.execute(user);
 		if(result) {
 			System.out.println("testExecute1:成功しました");
 		}else {
@@ -19,9 +19,9 @@ public class LoginLogicTest {
 		}
 	}
 	public static void testExecute2() {
-		Login login = new Login("kumagoro", "12345");
+		User user = new User("kumagoro", "12345");
 		LoginLogic bo = new LoginLogic();
-		boolean result = bo.execute(login);
+		boolean result = bo.execute(user);
 		if(!result) {
 			System.out.println("testExecute2:成功しました");
 		}else {
