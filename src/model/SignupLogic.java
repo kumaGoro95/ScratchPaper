@@ -3,9 +3,9 @@ package model;
 import dao.AccountDAO;
 
 public class SignupLogic {
-	public boolean execute(Signup signup) {
+	public boolean execute(User user) {
 		AccountDAO dao = new AccountDAO();
-		Account account = dao.signupAccount(signup);
+		Account account = dao.signupAccount(user);
 		return account != null;
 	}
 
