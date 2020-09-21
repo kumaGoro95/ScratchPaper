@@ -3,8 +3,7 @@ package test;
 
 import dao.AccountDAO;
 import model.Account;
-import model.Login;
-import model.Signup;
+import model.User;
 
 public class AccountDAOTest{
 	public static void main(String [] args) {
@@ -14,9 +13,9 @@ public class AccountDAOTest{
 	}
 
 	public static void testFindByLogin1() {
-		Login login = new Login("kumagoro", "1234");
+		User user = new User("kumagoro", "1234");
 		AccountDAO dao = new AccountDAO();
-		Account result = dao.findByLogin(login);
+		Account result = dao.findByLogin(user);
 		if(result != null && result.getName().equals("kumagoro") && result.getPass().equals("1234")){
 			System.out.println("testFindByLogin1:成功しました");
 		}else {
@@ -25,9 +24,9 @@ public class AccountDAOTest{
 	}
 
 	public static void testFindByLogic2() {
-		Login login = new Login("kumagoro", "12345");
+		User user = new User("kumagoro", "12345");
 		AccountDAO dao = new AccountDAO();
-		Account result = dao.findByLogin(login);
+		Account result = dao.findByLogin(user);
 		if(result == null) {
 			System.out.println("testFindByLogin2:成功しました");
 		}else {
@@ -36,9 +35,9 @@ public class AccountDAOTest{
 	}
 
 	public static void testSignupAccountLogic1() {
-		Signup signup = new Signup("monokuma", "1313");
+		User user = new User("monokuma", "1313");
 		AccountDAO dao = new AccountDAO();
-		Account result = dao.signupAccount(signup);
+		Account result = dao.signupAccount(user);
 		if(result != null && result.getName().equals("monokuma") && result.getPass().equals("1313")){
 			System.out.println("testSignupAccountLogic1:成功しました");
 		}else {

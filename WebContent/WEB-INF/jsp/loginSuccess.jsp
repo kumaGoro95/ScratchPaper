@@ -11,7 +11,8 @@
 <c:if test="${not empty errorMsg}">
 <c:out value="${errorMsg}" />
 </c:if><br>
-<p>ようこそ<c:out value="${name}" />さん</p>
+<p>ようこそ<c:out value="${userName}" />さん</p>
+<a href="/testJavaApp/PostsServlet">つぶやき</a>
 <a href="/testJavaApp/IndexServlet">トップへ</a>
 <a href="/testJavaApp/LogoutServlet">ログアウト</a>
 </body>
