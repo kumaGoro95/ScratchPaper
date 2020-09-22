@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Account;
 import model.Post;
 import model.PostGetLogic;
 import model.PostLogic;
@@ -23,8 +25,8 @@ public class PostServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String loginUser = (String)session.getAttribute("userName");
-		if (loginUser != null){
+		Account loginUser = (Account) session.getAttribute("account");
+		if (loginUser != null){ //ログインしている場合
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/post.jsp");
 			dispatcher.forward(request, response);
@@ -41,7 +43,9 @@ public class PostServlet extends HttpServlet {
 
 		//セッションスコープからユーザー名を取得
 		HttpSession session = request.getSession();
-		String name = (String) session.getAttribute("userName");
+		Account loginUser = (Account) session.getAttribute("account");
+		String userId = loginUser.getUserId();
+		String name = loginUser.getName();
 
 
 		if(text.length() > 150) {
@@ -54,7 +58,7 @@ public class PostServlet extends HttpServlet {
 		}
 
 		//投稿処理の実行
-		Post post = new Post(name,text);
+		Post post = new Post(userId,name,text);
 		PostLogic bo1 = new PostLogic();
 		boolean result = bo1.execute(post);
 
@@ -64,8 +68,10 @@ public class PostServlet extends HttpServlet {
 			PostGetLogic bo2 = new PostGetLogic();
 			List<WrittenPost> writtenPostList= new ArrayList<WrittenPost>();
 			writtenPostList = bo2.execute();
-			//リクエストスコープに保存
-			request.setAttribute("writtenPostList", writtenPostList);
+
+			//アプリケーションスコープに保存
+			ServletContext application = this.getServletContext();
+			application.setAttribute("writtenPostList",writtenPostList);
 
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
