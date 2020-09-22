@@ -8,12 +8,9 @@
 <title>テストアプリ</title>
 </head>
 <body>
-<c:if test="${not empty errorMsg}">
-<c:out value="${errorMsg}" />
-</c:if><br>
-<p>ようこそ<c:out value="${account.name}" />さん</p>
+<c:out value="${postDetail.postId}" /><br>
+<c:out value="${postDetail.name}" /><br>
+<c:out value="${postDetail.text}" /><br>
 <a href="/testJavaApp/PostsServlet">つぶやき</a>
-<a href="/testJavaApp/IndexServlet">トップへ</a>
-<a href="/testJavaApp/LogoutServlet">ログアウト</a>
 </body>
 </html>

@@ -17,6 +17,7 @@
 パスワードは半角英数字4文字以上で入力
 </c:if>
 <br><br>
+ユーザーID:<input type="text" name="userId"><br>
 名前:<input type="text" name="name"><br>
 パスワード:<input type="password" name="pass"><br>
 <input type="submit" value="登録">

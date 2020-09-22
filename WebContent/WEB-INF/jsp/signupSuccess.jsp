@@ -9,7 +9,8 @@
 </head>
 <body>
 <h1>登録完了</h1><br>
-<p>ようこそ<c:out value="${name.userName}" />さん</p>
+<p>ようこそ<c:out value="${account.name}" />さん</p>
+<a href="/testJavaApp/PostsServlet">つぶやき</a>
 <a href="/testJavaApp/LogoutServlet">ログアウト</a>
 </body>
 </html>

@@ -5,15 +5,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>テストアプリ</title>
+<title>Insert title here</title>
 </head>
 <body>
-<c:if test="${not empty errorMsg}">
-<c:out value="${errorMsg}" />
-</c:if><br>
-<p>ようこそ<c:out value="${account.name}" />さん</p>
+<c:out value="${userAccount.userId}" /><br>
+<c:out value="${userAccount.name}" /><br>
+<c:out value="${userAccount.pass}" /><br>
 <a href="/testJavaApp/PostsServlet">つぶやき</a>
-<a href="/testJavaApp/IndexServlet">トップへ</a>
-<a href="/testJavaApp/LogoutServlet">ログアウト</a>
 </body>
 </html>
