@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Signup;
 import model.SignupLogic;
+import model.User;
 
 @WebServlet("/SignupServlet")
 public class SignupServlet extends HttpServlet {
@@ -20,7 +20,7 @@ public class SignupServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String loginUser = (String)session.getAttribute("name");
+		String loginUser = (String)session.getAttribute("userName");
 		if (loginUser == null) {
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
@@ -39,16 +39,26 @@ public class SignupServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String name = request.getParameter("name");
 		String pass = request.getParameter("pass");
+
+		if(pass.length() < 4) {
+			//エラーメッセージをリクエストスコープに保存
+			request.setAttribute("errorMsg", "パスワードは４文字以上で設定してください");
+			//フォワード
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
+			dispatcher.forward(request, response);
+			return;
+		}
+
 		//会員登録処理の実行
-		Signup signup = new Signup(name, pass);
+		User user = new User(name, pass);
 		SignupLogic bo = new SignupLogic();
-		boolean result = bo.execute(signup);
+		boolean result = bo.execute(user);
 
 		//会員登録処理の成否によって処理を分岐
 		if (result) { //登録成功時
 			//セッションスコープにユーザー名を保存
 			HttpSession session = request.getSession();
-			session.setAttribute("name", name);
+			session.setAttribute("userName", name);
 
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signupSuccess.jsp");
