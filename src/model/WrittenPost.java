@@ -9,10 +9,10 @@ public class WrittenPost implements Serializable{
 
 	public WrittenPost() {}
 
-	public WrittenPost(int postId, String text, String name) {
+	public WrittenPost(int postId, String name,String text) {
 		this.postId = postId;
-		this.text = text;
 		this.name = name;
+		this.text = text;
 	}
 
 	public int getPostId() {

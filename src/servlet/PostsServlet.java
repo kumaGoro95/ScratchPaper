@@ -20,11 +20,11 @@ public class PostsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		//ツイート一覧を取得
 		PostGetLogic bo = new PostGetLogic();
 		List<WrittenPost> writtenPostList= new ArrayList<WrittenPost>();
 		writtenPostList = bo.execute();
-
+		//リクエストスコープに保存
 		request.setAttribute("writtenPostList", writtenPostList);
 
 		//つぶやきリストをアプリケーションスコープから取得
