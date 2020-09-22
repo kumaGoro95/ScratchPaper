@@ -9,4 +9,10 @@ public class SignupLogic {
 		return account != null;
 	}
 
+	public Account getUserInfo(User user){
+		AccountDAO dao = new AccountDAO();
+		Account account = dao.findByLogin(user);
+		return account;
+	}
+
 }
