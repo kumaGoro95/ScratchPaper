@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Account;
 import model.LoginLogic;
 import model.User;
 
@@ -35,18 +36,19 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//リクエストパラメータの取得
 		request.setCharacterEncoding("UTF-8");
-		String name = request.getParameter("name");
+		String userId = request.getParameter("userId");
 		String pass = request.getParameter("pass");
 		//ログイン処理の実行
-		User user = new User(name,pass);
+		User user = new User(userId,pass);
 		LoginLogic bo = new LoginLogic();
 		boolean result = bo.execute(user);
 
 		//ログイン処理の成否によって処理を分岐
 		if(result) { //ログイン成功時
+			Account account = bo.getUserInfo(user);
 			//セッションスコープにユーザーIDを保存
 			HttpSession session = request.getSession();
-			session.setAttribute("userName", name);
+			session.setAttribute("account", account);
 
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginSuccess.jsp");

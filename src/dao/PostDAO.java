@@ -8,8 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Account;
-import model.User;
+import model.Post;
 import model.WrittenPost;
 
 public class PostDAO {
@@ -18,7 +17,7 @@ public class PostDAO {
 	private final String DB_USER = "sa";
 	private final String DB_PASS = "";
 
-	public  ArrayList<WrittenPost> loadPost() {
+	public ArrayList<WrittenPost> loadPost() {
 
 		//arrayListを用意
 		List<WrittenPost> writtenPostList= new ArrayList<WrittenPost>();
@@ -27,7 +26,7 @@ public class PostDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			//SELECT文を準備
-			String sql = "SELECT ID, NAME, TEXT FROM POST";
+			String sql = "SELECT ID, NAME, TEXT, USER_ID FROM POST";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			ResultSet rs = pStmt.executeQuery();
 
@@ -36,6 +35,7 @@ public class PostDAO {
 				writtenPost.setPostId(rs.getInt("ID"));
 				writtenPost.setName(rs.getNString("NAME"));
 				writtenPost.setText(rs.getNString("TEXT"));
+				writtenPost.setUserId(rs.getNString("USER_ID"));
 				//ListにPostをaddしていく
 				writtenPostList.add(writtenPost);
 				}
@@ -44,60 +44,85 @@ public class PostDAO {
 			e.printStackTrace();
 			return null;
 		}
-		//見つかったユーザー、またはnullを返す
+		//見つかったpost、またはnullを返す
 		return (ArrayList<WrittenPost>) writtenPostList;
 	}
 
-	public Account signupAccount(User user) {
-		Account account = null;
+	public WrittenPost addPost(Post post) {
+
+		WrittenPost writtenPost = null;
+
+		//データベースへ接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			//INSERT文を準備
+			String insertSql = "INSERT INTO POST(NAME, TEXT, USER_ID) VALUES(?, ?, ?)";
+			PreparedStatement pStmt1 = conn.prepareStatement(insertSql);
+			pStmt1.setString(1, post.getName());
+			pStmt1.setString(2, post.getText());
+			pStmt1.setString(3, post.getUserId());
+
+			//INSERT文を実行
+			int result = pStmt1.executeUpdate();
+
+			//SELECT文を準備
+			String selectSql = "SELECT ID, NAME, TEXT, USER_ID FROM POST WHERE NAME = ? AND TEXT = ? AND USER_ID = ? ";
+			PreparedStatement pStmt2 = conn.prepareStatement(selectSql);
+			pStmt2.setString(1, post.getName());
+			pStmt2.setString(2, post.getText());
+			pStmt2.setString(3, post.getUserId());
+
+			//SELECT文を実行し、結果表を取得
+			ResultSet rs2 = pStmt2.executeQuery();
+
+			//そのユーザーを表すWrittenPostインスタンスを生成
+			if (rs2.next()) {
+				//結果表からデータを取得
+				int postId = rs2.getInt("ID");
+				String name = rs2.getNString("NAME");
+				String text = rs2.getNString("TEXT");
+				String userId = rs2.getString("USER_ID");
+				writtenPost = new WrittenPost(postId, userId, name, text);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		//投稿したwrittenPost、またはnullを返す
+		return writtenPost;
+	}
+
+	public WrittenPost findPostInfo(Post post) {
+
+		WrittenPost writtenPost = null;
 
 		//データベースへ接続
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			//SELECT文を準備
-			String duplicateCheckSql = "SELECT USER_ID, PASS, NAME FROM ACCOUNT WHERE NAME = ?";
-			PreparedStatement pStmt1 = conn.prepareStatement(duplicateCheckSql);
-			pStmt1.setString(1, user.getName());
+			String sql = "SELECT ID, NAME, TEXT, USER_ID FROM POST WHERE ID = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setInt(1, post.getPostId());
 
 			//SELECT文を実行し、結果表を取得
-			ResultSet rs1 = pStmt1.executeQuery();
+			ResultSet rs = pStmt.executeQuery();
 
-			if (rs1.next() == false) {
-				//INSERT文を準備
-				String insertSql = "INSERT INTO ACCOUNT(PASS, NAME) VALUES(?, ?)";
-				PreparedStatement pStmt2 = conn.prepareStatement(insertSql);
-				pStmt2.setString(1, user.getPass());
-				pStmt2.setString(2, user.getName());
-
-				//INSERT文を実行
-				int result = pStmt2.executeUpdate();
-
-				//SELECT文を準備
-				String selectSql = "SELECT USER_ID, PASS, NAME FROM ACCOUNT WHERE PASS = ? AND NAME = ?";
-				PreparedStatement pStmt3 = conn.prepareStatement(selectSql);
-				pStmt3.setString(1, user.getPass());
-				pStmt3.setString(2, user.getName());
-
-				//SELECT文を実行し、結果表を取得
-				ResultSet rs2 = pStmt3.executeQuery();
-
-				//そのユーザーを表すAccountインスタンスを生成
-				if (rs2.next()) {
-					//結果表からデータを取得
-					String userId = rs2.getString("USER_ID");
-					String pass = rs2.getNString("PASS");
-					String name = rs2.getNString("NAME");
-					account = new Account(userId, pass, name);
-					}
-				} else {
-					return null;
-					}
+			//一致したユーザーが存在した場合
+			//そのユーザーを表すAccountインスタンスを生成
+			if (rs.next()) {
+				//結果表からデータを取得
+				int postId = post.getPostId();
+				String name = rs.getString("NAME");
+				String text = rs.getString("TEXT");
+				String userId = rs.getString("USER_ID");
+				writtenPost = new WrittenPost(postId, userId, name, text);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		//作成したユーザー、またはnullを返す
-		return account;
+		//見つかったpost、またはnullを返す
+		return writtenPost;
 	}
 
 }

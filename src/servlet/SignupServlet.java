@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.Account;
 import model.SignupLogic;
 import model.User;
 
@@ -20,7 +21,7 @@ public class SignupServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String loginUser = (String)session.getAttribute("userName");
+		String loginUser = (String)session.getAttribute("account");
 		if (loginUser == null) {
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
@@ -35,8 +36,11 @@ public class SignupServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Account account = null;
+
 		//リクエストパラメータの取得
 		request.setCharacterEncoding("UTF-8");
+		String userId= request.getParameter("userId");
 		String name = request.getParameter("name");
 		String pass = request.getParameter("pass");
 
@@ -50,15 +54,16 @@ public class SignupServlet extends HttpServlet {
 		}
 
 		//会員登録処理の実行
-		User user = new User(name, pass);
+		User user = new User(userId, name, pass);
 		SignupLogic bo = new SignupLogic();
 		boolean result = bo.execute(user);
 
 		//会員登録処理の成否によって処理を分岐
 		if (result) { //登録成功時
-			//セッションスコープにユーザー名を保存
+			account = bo.getUserInfo(user);
+			//セッションスコープにユーザーIDを保存
 			HttpSession session = request.getSession();
-			session.setAttribute("userName", name);
+			session.setAttribute("account", account);
 
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signupSuccess.jsp");
