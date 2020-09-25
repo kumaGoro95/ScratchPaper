@@ -11,6 +11,10 @@
 <c:out value="${postDetail.postId}" /><br>
 <c:out value="${postDetail.name}" /><br>
 <c:out value="${postDetail.text}" /><br>
+<c:if test="${postDetail.userId == account.userId}" var="flg" />
+<c:if test="${flg}" >
+<a href="/testJavaApp/DeleteServlet?action=posts">削除</a>
+</c:if>
 <a href="/testJavaApp/PostsServlet">つぶやき</a>
 </body>
 </html>
