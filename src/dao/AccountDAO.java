@@ -132,4 +132,45 @@ public class AccountDAO {
 		return account;
 	}
 
+	public boolean deleteUserInfo(Account account) {
+		Account deletedAccount = null;
+
+		//データベースへ接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			//DELETE文を準備
+			String deleteSql = "DELETE FROM ACCOUNT WHERE USER_ID = ?";
+			PreparedStatement pStmt1 = conn.prepareStatement(deleteSql);
+			pStmt1.setString(1, account.getUserId());
+
+			//SELECT文を実行し、結果表を取得
+			int result = pStmt1.executeUpdate();
+
+			//SELECT文を準備
+			String selectSql = "SELECT USER_ID FROM ACCOUNT WHERE USER_ID = ?";
+			PreparedStatement pStmt2 = conn.prepareStatement(selectSql);
+			pStmt2.setString(1, account.getUserId());
+
+			//SELECT文を実行し、結果表を取得
+			ResultSet rs = pStmt2.executeQuery();
+
+			//該当ユーザーが削除されていればtrue
+			//されていなければfalseを返す
+			if (rs.next()) {
+				//結果表からデータを取得
+				String userId = rs.getString("USER_ID");
+				String pass = rs.getString("PASS");
+				String name = rs.getString("NAME");
+				deletedAccount = new Account(userId, pass, name);
+			}
+			if(deletedAccount == null) {
+				return true;
+			}else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
