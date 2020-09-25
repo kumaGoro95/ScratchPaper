@@ -32,7 +32,9 @@ public class PostsServlet extends HttpServlet {
 			Post post = new Post(postId);
 			FindLogic bo = new FindLogic();
 			WrittenPost writtenPost = bo.getPostInfo(post);
-			request.setAttribute("postDetail", writtenPost);
+			HttpSession session = request.getSession();
+			session.setAttribute("postDetail", writtenPost);
+			//request.setAttribute("postDetail", writtenPost);
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/postdetail.jsp");
 			dispatcher.forward(request, response);
