@@ -125,4 +125,45 @@ public class PostDAO {
 		return writtenPost;
 	}
 
+	public boolean deletePostInfo(WrittenPost writtenPost) {
+		WrittenPost deletedPost = null;
+
+		//データベースへ接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			//DELETE文を準備
+			String deleteSql = "DELETE FROM POST WHERE ID = ?;";
+			PreparedStatement pStmt1 = conn.prepareStatement(deleteSql);
+			pStmt1.setInt(1, writtenPost.getPostId());
+
+			//DELETE文を実行
+			int result = pStmt1.executeUpdate();
+
+			//SELECT文を準備
+			String selectSql = "SELECT ID, NAME, TEXT, USER_ID FROM POST WHERE ID = ?";
+			PreparedStatement pStmt2 = conn.prepareStatement(selectSql);
+			pStmt2.setInt(1, writtenPost.getPostId());
+
+			//SELECT文を実行し、結果表を取得
+			ResultSet rs = pStmt2.executeQuery();
+
+			if (rs.next()) {
+				//結果表からデータを取得
+				int postId = rs.getInt("ID");
+				String name = rs.getString("NAME");
+				String text = rs.getString("TEXT");
+				String userId = rs.getString("USER_ID");
+				deletedPost = new WrittenPost(postId, userId, name, text);
+			}
+
+			if(deletedPost == null) {
+				return true;
+			}else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		}
 }
