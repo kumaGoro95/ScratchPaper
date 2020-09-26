@@ -4,11 +4,13 @@ public class User {
 	private String userId;
 	private String name;
 	private String pass;
+	private String icon;
 
-	public User(String userId,String name, String pass) {
+	public User(String userId,String name, String pass, String icon) {
 		this.userId = userId;
 		this.name = name;
 		this.pass = pass;
+		this.icon = icon;
 	}
 
 	public User(String userId, String pass) {
@@ -29,5 +31,9 @@ public class User {
 	}
 	 public String getPass() {
 		 return pass;
+	 }
+
+	 public String getIcon() {
+		 return icon;
 	 }
 }
