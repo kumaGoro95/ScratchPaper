@@ -26,7 +26,7 @@ public class PostDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			//SELECT文を準備
-			String sql = "SELECT ID, NAME, TEXT, USER_ID FROM POST";
+			String sql = "SELECT ID, NAME, TEXT, USER_ID, ICON FROM POST";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			ResultSet rs = pStmt.executeQuery();
 
@@ -36,6 +36,7 @@ public class PostDAO {
 				writtenPost.setName(rs.getNString("NAME"));
 				writtenPost.setText(rs.getNString("TEXT"));
 				writtenPost.setUserId(rs.getNString("USER_ID"));
+				writtenPost.setIcon(rs.getNString("ICON"));
 				//ListにPostをaddしていく
 				writtenPostList.add(writtenPost);
 				}
@@ -56,21 +57,23 @@ public class PostDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			//INSERT文を準備
-			String insertSql = "INSERT INTO POST(NAME, TEXT, USER_ID) VALUES(?, ?, ?)";
+			String insertSql = "INSERT INTO POST(NAME, TEXT, USER_ID, ICON) VALUES(?, ?, ?, ?)";
 			PreparedStatement pStmt1 = conn.prepareStatement(insertSql);
 			pStmt1.setString(1, post.getName());
 			pStmt1.setString(2, post.getText());
 			pStmt1.setString(3, post.getUserId());
+			pStmt1.setString(4, post.getIcon());
 
 			//INSERT文を実行
 			int result = pStmt1.executeUpdate();
 
 			//SELECT文を準備
-			String selectSql = "SELECT ID, NAME, TEXT, USER_ID FROM POST WHERE NAME = ? AND TEXT = ? AND USER_ID = ? ";
+			String selectSql = "SELECT ID, NAME, TEXT, USER_ID, ICON FROM POST WHERE NAME = ? AND TEXT = ? AND USER_ID = ? AND ICON = ?";
 			PreparedStatement pStmt2 = conn.prepareStatement(selectSql);
 			pStmt2.setString(1, post.getName());
 			pStmt2.setString(2, post.getText());
 			pStmt2.setString(3, post.getUserId());
+			pStmt2.setString(4, post.getIcon());
 
 			//SELECT文を実行し、結果表を取得
 			ResultSet rs2 = pStmt2.executeQuery();
@@ -82,7 +85,8 @@ public class PostDAO {
 				String name = rs2.getNString("NAME");
 				String text = rs2.getNString("TEXT");
 				String userId = rs2.getString("USER_ID");
-				writtenPost = new WrittenPost(postId, userId, name, text);
+				String icon = rs2.getNString("ICON");
+				writtenPost = new WrittenPost(postId, userId, name, text, icon);
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -100,7 +104,7 @@ public class PostDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			//SELECT文を準備
-			String sql = "SELECT ID, NAME, TEXT, USER_ID FROM POST WHERE ID = ?";
+			String sql = "SELECT ID, NAME, TEXT, USER_ID, ICON FROM POST WHERE ID = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setInt(1, post.getPostId());
 
@@ -115,7 +119,8 @@ public class PostDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String userId = rs.getString("USER_ID");
-				writtenPost = new WrittenPost(postId, userId, name, text);
+				String icon = rs.getNString("ICON");
+				writtenPost = new WrittenPost(postId, userId, name, text, icon);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -140,7 +145,7 @@ public class PostDAO {
 			int result = pStmt1.executeUpdate();
 
 			//SELECT文を準備
-			String selectSql = "SELECT ID, NAME, TEXT, USER_ID FROM POST WHERE ID = ?";
+			String selectSql = "SELECT ID, NAME, TEXT, USER_ID, ICON FROM POST WHERE ID = ?";
 			PreparedStatement pStmt2 = conn.prepareStatement(selectSql);
 			pStmt2.setInt(1, writtenPost.getPostId());
 
@@ -153,7 +158,8 @@ public class PostDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String userId = rs.getString("USER_ID");
-				deletedPost = new WrittenPost(postId, userId, name, text);
+				String icon = rs.getNString("ICON");
+				deletedPost = new WrittenPost(postId, userId, name, text, icon);
 			}
 
 			if(deletedPost == null) {
