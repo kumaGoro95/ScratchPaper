@@ -6,16 +6,30 @@
 <head>
 <meta charset="UTF-8">
 <title>テストアプリ</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/users.css">
 </head>
 <body>
+<jsp:include page="/header.jsp" />
+
+<div class="main users-new">
+  <div class="container">
+    <h1 class="form-heading">Login</h1>
+    <div class="form users-form">
+    <div class="form-body">
+      <c:if test="${not empty errorMsg}">
+       <div class="form-error">
+      <c:out value="${errorMsg}" />
+        </div>
+      </c:if>
+
 <form action="/testJavaApp/LoginServlet" method="post">
-<c:if test="${not empty errorMsg}">
-<c:out value="${errorMsg}" />
-</c:if><br>
 ユーザーID:<input type="text" name="userId"><br>
 パスワード:<input type="password" name="pass"><br>
 <input type="submit" value="ログイン">
-</form><br>
-<a href="/testJavaApp/IndexServlet">トップへ</a>
+</form>
+</div>
+</div>
+</div>
+</div>
 </body>
 </html>

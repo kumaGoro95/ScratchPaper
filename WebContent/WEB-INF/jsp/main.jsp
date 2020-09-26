@@ -9,13 +9,26 @@
 <head>
 <meta charset="UTF-8">
 <title>テストアプリ</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/posts.css">
 </head>
 <body>
-<p><a href="/testJavaApp/PostsServlet">更新</a></p>
-<p><a href="/testJavaApp/PostServlet">つぶやく</a></p>
+<jsp:include page="/header.jsp" />
+<div class="main posts-index">
+<div class="container">
 <% for(WrittenPost writtenPost : writtenPostList){ %>
-  <p><a href="/testJavaApp/UserServlet?userId=<%= writtenPost.getUserId()%>"><%= writtenPost.getName() %></a>:
-  <a href="/testJavaApp/PostsServlet?postId=<%= writtenPost.getPostId()%>"><%= writtenPost.getText() %></a></p>
+<div class="posts-index-item">
+ <div class="post-left">
+ <img src= "${pageContext.request.contextPath}/media/<%= writtenPost.getIcon()%>">
+ </div>
+ <div class="post-right">
+ <div class="post-user-name">
+  <a href="/testJavaApp/UserServlet?userId=<%= writtenPost.getUserId()%>"><%= writtenPost.getName() %></a>
+  </div>
+  <a href="/testJavaApp/PostsServlet?postId=<%= writtenPost.getPostId()%>"><%= writtenPost.getText() %></a>
+  </div>
+  </div>
 <% } %>
+</div>
+</div>
 </body>
 </html>

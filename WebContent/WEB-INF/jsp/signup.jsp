@@ -6,22 +6,35 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/users.css">
 </head>
 <body>
-<form action="/testJavaApp/SignupServlet" method="post">
+<jsp:include page="/header.jsp" />
+
+<div class="main users-new">
+<div class="container">
+<h1 class="form-heading">Sign up</h1>
+<div class="form users-form">
+<div class="form-body">
 <c:if test="${not empty errorMsg}">
+<div class="form-error">
 <c:out value="${errorMsg}" />
+</div>
 </c:if>
+
 <c:if test="${empty errorMsg}">
 名前は4文字以上
 パスワードは半角英数字4文字以上で入力
 </c:if>
-<br><br>
+<form action="/testJavaApp/SignupServlet" method="post">
 ユーザーID:<input type="text" name="userId"><br>
 名前:<input type="text" name="name"><br>
 パスワード:<input type="password" name="pass"><br>
 <input type="submit" value="登録">
-</form><br>
-<a href="/testJavaApp/IndexServlet">トップへ</a>
+</form>
+</div>
+</div>
+</div>
+</div>
 </body>
 </html>
