@@ -28,8 +28,8 @@ public class DeleteServlet extends HttpServlet {
 		try {
 			//Post削除
 			if (action.equals("posts")) {
-				HttpSession session = request.getSession();
-				WrittenPost writtenPost = (WrittenPost) session.getAttribute("postDetail");
+				HttpSession session1 = request.getSession();
+				WrittenPost writtenPost = (WrittenPost) session1.getAttribute("postDetail");
 				DeleteLogic bo = new DeleteLogic();
 				hasSucceed = bo.deletePost(writtenPost);
 				//リダイレクト
@@ -42,6 +42,11 @@ public class DeleteServlet extends HttpServlet {
 				Account account = (Account) session.getAttribute("account");
 				DeleteLogic bo = new DeleteLogic();
 				hasSucceed = bo.deleteUser(account);
+
+				//セッションスコープを破棄
+				HttpSession session2 = request.getSession();
+				session2.invalidate();
+
 				//リダイレクト
 				response.sendRedirect("/testJavaApp/IndexServlet");
 			}

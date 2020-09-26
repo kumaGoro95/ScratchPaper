@@ -6,15 +6,26 @@
 <head>
 <meta charset="UTF-8">
 <title>テストアプリ</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/posts.css">
 </head>
 <body>
-<c:out value="${postDetail.postId}" /><br>
-<c:out value="${postDetail.name}" /><br>
-<c:out value="${postDetail.text}" /><br>
+<jsp:include page="/header.jsp" />
+<div class="main posts-chow">
+ <div class="container">
+ <div class="posts-show-item">
+ <div class="post-user-name">
+ <img src="${pageContext.request.contextPath}/media/${postDetail.icon}">
+<c:out value="${postDetail.name}" />
+</div>
+<p>
+<c:out value="${postDetail.text}" />
+</p>
 <c:if test="${postDetail.userId == account.userId}" var="flg" />
 <c:if test="${flg}" >
 <a href="/testJavaApp/DeleteServlet?action=posts">削除</a>
 </c:if>
-<a href="/testJavaApp/PostsServlet">つぶやき</a>
+</div>
+</div>
+</div>
 </body>
 </html>

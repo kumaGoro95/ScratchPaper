@@ -5,18 +5,21 @@ public class Post {
 	private String userId;
 	private String name;
 	private String text;
+	private String icon;
 
-	public Post(int postId, String userId, String name, String text) {
+	public Post(int postId, String userId, String name, String text, String icon) {
 		this.postId = postId;
 		this.userId = userId;
 		this.name = name;
 		this.text = text;
+		this.icon = icon;
 	}
 
-	public Post(String userId, String name, String text) {
+	public Post(String userId, String name, String text, String icon) {
 		this.userId = userId;
 		this.name = name;
 		this.text = text;
+		this.icon = icon;
 	}
 
 	public Post(int postId) {
@@ -37,6 +40,9 @@ public class Post {
 	 public String getText() {
 		 return text;
 	 }
+	 public String getIcon() {
+		 return icon;
+	 }
 
 	 public void setPostId(int postId) {
 		 this.postId = postId;
@@ -51,6 +57,9 @@ public class Post {
 	 }
 	 public void setText(String text) {
 		 this.text = text;
+	 }
+	 public void setIcon(String icon) {
+		 this.icon = icon;
 	 }
 
 }

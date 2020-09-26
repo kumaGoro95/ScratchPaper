@@ -7,14 +7,16 @@ public class WrittenPost implements Serializable{
 	private String userId;
 	private String text;
 	private String name;
+	private String icon;
 
 	public WrittenPost() {}
 
-	public WrittenPost(int postId, String userId, String name,String text) {
+	public WrittenPost(int postId, String userId, String name,String text, String icon) {
 		this.postId = postId;
 		this.userId = userId;
 		this.name = name;
 		this.text = text;
+		this.icon = icon;
 	}
 
 	public int getPostId() {
@@ -29,6 +31,9 @@ public class WrittenPost implements Serializable{
 	public String getName() {
 		return name;
 	}
+	public String getIcon() {
+		return icon;
+	}
 
 	 public void setPostId(int postId) {
 		 this.postId = postId;
@@ -41,5 +46,8 @@ public class WrittenPost implements Serializable{
 	 }
 	 public void setText(String text) {
 		 this.text = text;
+	 }
+	 public void setIcon(String icon) {
+		 this.icon = icon;
 	 }
 }

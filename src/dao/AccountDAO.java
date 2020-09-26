@@ -22,7 +22,7 @@ public class AccountDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			//SELECT文を準備
-			String sql = "SELECT PASS, NAME, USER_ID FROM ACCOUNT WHERE PASS = ? AND USER_ID = ?";
+			String sql = "SELECT PASS, NAME, USER_ID, ICON FROM ACCOUNT WHERE PASS = ? AND USER_ID = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, user.getPass());
 			pStmt.setString(2, user.getUserId());
@@ -37,7 +37,8 @@ public class AccountDAO {
 				String userId = rs.getString("USER_ID");
 				String pass = rs.getString("PASS");
 				String name = rs.getString("NAME");
-				account = new Account(userId, pass, name);
+				String icon = rs.getString("ICON");
+				account = new Account(userId, pass, name, icon);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -54,7 +55,7 @@ public class AccountDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			//SELECT文を準備
-			String duplicateCheckSql = "SELECT PASS, NAME, USER_ID FROM ACCOUNT WHERE USER_ID = ?";
+			String duplicateCheckSql = "SELECT PASS, NAME, USER_ID, ICON FROM ACCOUNT WHERE USER_ID = ?";
 			PreparedStatement pStmt1 = conn.prepareStatement(duplicateCheckSql);
 			pStmt1.setString(1, user.getUserId());
 
@@ -63,21 +64,23 @@ public class AccountDAO {
 
 			if (rs1.next() == false) {
 				//INSERT文を準備
-				String insertSql = "INSERT INTO ACCOUNT(PASS, NAME, USER_ID) VALUES(?, ?, ?)";
+				String insertSql = "INSERT INTO ACCOUNT(PASS, NAME, USER_ID, ICON) VALUES(?, ?, ?, ?)";
 				PreparedStatement pStmt2 = conn.prepareStatement(insertSql);
 				pStmt2.setString(1, user.getPass());
 				pStmt2.setString(2, user.getName());
 				pStmt2.setString(3, user.getUserId());
+				pStmt2.setString(4, user.getIcon());
 
 				//INSERT文を実行
 				int result = pStmt2.executeUpdate();
 
 				//SELECT文を準備
-				String selectSql = "SELECT PASS, NAME, USER_ID FROM ACCOUNT WHERE PASS = ? AND NAME = ? AND USER_ID = ?";
+				String selectSql = "SELECT PASS, NAME, USER_ID, ICON FROM ACCOUNT WHERE PASS = ? AND NAME = ? AND USER_ID = ? AND ICON = ?";
 				PreparedStatement pStmt3 = conn.prepareStatement(selectSql);
 				pStmt3.setString(1, user.getPass());
 				pStmt3.setString(2, user.getName());
 				pStmt3.setString(3, user.getUserId());
+				pStmt3.setString(4, user.getIcon());
 
 				//SELECT文を実行し、結果表を取得
 				ResultSet rs2 = pStmt3.executeQuery();
@@ -88,7 +91,8 @@ public class AccountDAO {
 					String userId = rs2.getString("USER_ID");
 					String pass = rs2.getNString("PASS");
 					String name = rs2.getNString("NAME");
-					account = new Account(userId, pass, name);
+					String icon = rs2.getNString("ICON");
+					account = new Account(userId, pass, name, icon);
 					}
 				} else {
 					return null;
@@ -108,7 +112,7 @@ public class AccountDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			//SELECT文を準備
-			String sql = "SELECT PASS, NAME, USER_ID FROM ACCOUNT WHERE USER_ID = ?";
+			String sql = "SELECT PASS, NAME, USER_ID, ICON FROM ACCOUNT WHERE USER_ID = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, user.getUserId());
 
@@ -122,7 +126,8 @@ public class AccountDAO {
 				String userId = rs.getString("USER_ID");
 				String pass = rs.getString("PASS");
 				String name = rs.getString("NAME");
-				account = new Account(userId, pass, name);
+				String icon = rs.getNString("ICON");
+				account = new Account(userId, pass, name, icon);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -161,7 +166,8 @@ public class AccountDAO {
 				String userId = rs.getString("USER_ID");
 				String pass = rs.getString("PASS");
 				String name = rs.getString("NAME");
-				deletedAccount = new Account(userId, pass, name);
+				String icon = rs.getString("ICON");
+				deletedAccount = new Account(userId, pass, name, icon);
 			}
 			if(deletedAccount == null) {
 				return true;

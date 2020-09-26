@@ -27,10 +27,7 @@ public class SignupServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			//ログイン済ならloginSuccessへ
-			request.setAttribute("errorMsg", "すでにログイン済です");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginSuccess.jsp");
-			dispatcher.forward(request, response);
+			response.sendRedirect("/testJavaApp/PostsServlet");
 		}
 	}
 
@@ -43,6 +40,7 @@ public class SignupServlet extends HttpServlet {
 		String userId= request.getParameter("userId");
 		String name = request.getParameter("name");
 		String pass = request.getParameter("pass");
+		String icon = "default.png";
 
 		if(pass.length() < 4) {
 			//エラーメッセージをリクエストスコープに保存
@@ -54,7 +52,7 @@ public class SignupServlet extends HttpServlet {
 		}
 
 		//会員登録処理の実行
-		User user = new User(userId, name, pass);
+		User user = new User(userId, name, pass, icon);
 		SignupLogic bo = new SignupLogic();
 		boolean result = bo.execute(user);
 
@@ -65,9 +63,8 @@ public class SignupServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("account", account);
 
-			//フォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signupSuccess.jsp");
-			dispatcher.forward(request, response);
+			//リダイレクト
+			response.sendRedirect("/testJavaApp/PostsServlet");
 		} else { //登録失敗時
 			//エラーメッセージをリクエストスコープに保存
 			request.setAttribute("errorMsg", "ユーザー名、またはパスワードが不正です");

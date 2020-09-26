@@ -20,15 +20,15 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String loginUser = (String)session.getAttribute("userName");
+		Account loginUser = (Account)session.getAttribute("account");
 		if (loginUser == null){
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			//ログイン済ならloginSuccessへ
+			//ログイン済ならmainへ
 			request.setAttribute("errorMsg", "すでにログイン済です");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginSuccess.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");
 			dispatcher.forward(request, response);
 		}
 	}
@@ -50,9 +50,8 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("account", account);
 
-			//フォワード
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/loginSuccess.jsp");
-			dispatcher.forward(request, response);
+			//リダイレクト
+			response.sendRedirect("/testJavaApp/PostsServlet");
 		}else { //ログイン失敗時
 			//エラーメッセージをリクエストスコープに保存
 			request.setAttribute("errorMsg", "ユーザー名、またはパスワードが間違っています");
