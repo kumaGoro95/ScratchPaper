@@ -46,6 +46,7 @@ public class PostServlet extends HttpServlet {
 		Account loginUser = (Account) session.getAttribute("account");
 		String userId = loginUser.getUserId();
 		String name = loginUser.getName();
+		String icon = loginUser.getIcon();
 
 
 		if(text.length() > 150) {
@@ -58,7 +59,7 @@ public class PostServlet extends HttpServlet {
 		}
 
 		//投稿処理の実行
-		Post post = new Post(userId,name,text);
+		Post post = new Post(userId,name,text,icon);
 		PostLogic bo1 = new PostLogic();
 		boolean result = bo1.execute(post);
 
