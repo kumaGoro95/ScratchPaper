@@ -12,10 +12,13 @@ import model.Post;
 import model.WrittenPost;
 
 public class PostDAO {
-	//データベース接続に使用する情報
-	private final String JDBC_URL = "jdbc:h2:tcp://localhost/~/testJavaApp";
-	private final String DB_USER = "sa";
-	private final String DB_PASS = "";
+	//DB接続用定数
+    String DATABASE_NAME = "scratch_paper";
+    String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
+    String URL = "jdbc:mysql://localhost/" + DATABASE_NAME + PROPATIES;
+    //DB接続用・ユーザ定数
+    String USER = "root";
+    String PASS = "";
 
 	public ArrayList<WrittenPost> loadPost() {
 
@@ -23,7 +26,12 @@ public class PostDAO {
 		List<WrittenPost> writtenPostList= new ArrayList<WrittenPost>();
 
 		//データベースへ接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try {
+
+			//MySQL に接続する
+            Class.forName("com.mysql.jdbc.Driver");
+            //データベースに接続
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
 
 			//SELECT文を準備
 			String sql = "SELECT ID, NAME, TEXT, USER_ID, ICON FROM POST";
@@ -33,15 +41,15 @@ public class PostDAO {
 			while(rs.next()) {
 				WrittenPost writtenPost = new WrittenPost();
 				writtenPost.setPostId(rs.getInt("ID"));
-				writtenPost.setName(rs.getNString("NAME"));
-				writtenPost.setText(rs.getNString("TEXT"));
-				writtenPost.setUserId(rs.getNString("USER_ID"));
-				writtenPost.setIcon(rs.getNString("ICON"));
+				writtenPost.setName(rs.getString("NAME"));
+				writtenPost.setText(rs.getString("TEXT"));
+				writtenPost.setUserId(rs.getString("USER_ID"));
+				writtenPost.setIcon(rs.getString("ICON"));
 				//ListにPostをaddしていく
 				writtenPostList.add(writtenPost);
 				}
 
-		} catch (SQLException e) {
+		} catch (SQLException| ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -54,7 +62,12 @@ public class PostDAO {
 		WrittenPost writtenPost = null;
 
 		//データベースへ接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try{
+
+			//MySQL に接続する
+            Class.forName("com.mysql.jdbc.Driver");
+            //データベースに接続
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
 
 			//INSERT文を準備
 			String insertSql = "INSERT INTO POST(NAME, TEXT, USER_ID, ICON) VALUES(?, ?, ?, ?)";
@@ -82,13 +95,13 @@ public class PostDAO {
 			if (rs2.next()) {
 				//結果表からデータを取得
 				int postId = rs2.getInt("ID");
-				String name = rs2.getNString("NAME");
-				String text = rs2.getNString("TEXT");
+				String name = rs2.getString("NAME");
+				String text = rs2.getString("TEXT");
 				String userId = rs2.getString("USER_ID");
-				String icon = rs2.getNString("ICON");
+				String icon = rs2.getString("ICON");
 				writtenPost = new WrittenPost(postId, userId, name, text, icon);
 				}
-		} catch (SQLException e) {
+		} catch (SQLException| ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -101,7 +114,13 @@ public class PostDAO {
 		WrittenPost writtenPost = null;
 
 		//データベースへ接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try {
+
+
+			//MySQL に接続する
+            Class.forName("com.mysql.jdbc.Driver");
+            //データベースに接続
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
 
 			//SELECT文を準備
 			String sql = "SELECT ID, NAME, TEXT, USER_ID, ICON FROM POST WHERE ID = ?";
@@ -119,10 +138,10 @@ public class PostDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String userId = rs.getString("USER_ID");
-				String icon = rs.getNString("ICON");
+				String icon = rs.getString("ICON");
 				writtenPost = new WrittenPost(postId, userId, name, text, icon);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -134,7 +153,13 @@ public class PostDAO {
 		WrittenPost deletedPost = null;
 
 		//データベースへ接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try {
+
+
+			//MySQL に接続する
+            Class.forName("com.mysql.jdbc.Driver");
+            //データベースに接続
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
 
 			//DELETE文を準備
 			String deleteSql = "DELETE FROM POST WHERE ID = ?;";
@@ -158,7 +183,7 @@ public class PostDAO {
 				String name = rs.getString("NAME");
 				String text = rs.getString("TEXT");
 				String userId = rs.getString("USER_ID");
-				String icon = rs.getNString("ICON");
+				String icon = rs.getString("ICON");
 				deletedPost = new WrittenPost(postId, userId, name, text, icon);
 			}
 
@@ -167,7 +192,7 @@ public class PostDAO {
 			}else {
 				return false;
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		}

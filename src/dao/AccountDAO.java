@@ -10,16 +10,23 @@ import model.Account;
 import model.User;
 
 public class AccountDAO {
-	//データベース接続に使用する情報
-	private final String JDBC_URL = "jdbc:h2:tcp://localhost/~/testJavaApp";
-	private final String DB_USER = "sa";
-	private final String DB_PASS = "";
+	//DB接続用定数
+    String DATABASE_NAME = "scratch_paper";
+    String PROPATIES = "?characterEncoding=UTF-8&serverTimezone=JST";
+    String URL = "jdbc:mysql://localhost/" + DATABASE_NAME + PROPATIES;
+    //DB接続用・ユーザ定数
+    String USER = "root";
+    String PASS = "";
 
-	public Account findByLogin(User user) {
+	public Account findByLogin(User user){
 		Account account = null;
-
 		//データベースへ接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try {
+
+			//MySQL に接続する
+            Class.forName("com.mysql.jdbc.Driver");
+            //データベースに接続
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
 
 			//SELECT文を準備
 			String sql = "SELECT PASS, NAME, USER_ID, ICON FROM ACCOUNT WHERE PASS = ? AND USER_ID = ?";
@@ -40,7 +47,7 @@ public class AccountDAO {
 				String icon = rs.getString("ICON");
 				account = new Account(userId, pass, name, icon);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -52,7 +59,12 @@ public class AccountDAO {
 		Account account = null;
 
 		//データベースへ接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try {
+
+			//MySQL に接続する
+            Class.forName("com.mysql.jdbc.Driver");
+            //データベースに接続
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
 
 			//SELECT文を準備
 			String duplicateCheckSql = "SELECT PASS, NAME, USER_ID, ICON FROM ACCOUNT WHERE USER_ID = ?";
@@ -89,15 +101,15 @@ public class AccountDAO {
 				if (rs2.next()) {
 					//結果表からデータを取得
 					String userId = rs2.getString("USER_ID");
-					String pass = rs2.getNString("PASS");
-					String name = rs2.getNString("NAME");
-					String icon = rs2.getNString("ICON");
+					String pass = rs2.getString("PASS");
+					String name = rs2.getString("NAME");
+					String icon = rs2.getString("ICON");
 					account = new Account(userId, pass, name, icon);
 					}
 				} else {
 					return null;
 					}
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -109,7 +121,12 @@ public class AccountDAO {
 		Account account = null;
 
 		//データベースへ接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try {
+
+			//MySQL に接続する
+            Class.forName("com.mysql.jdbc.Driver");
+            //データベースに接続
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
 
 			//SELECT文を準備
 			String sql = "SELECT PASS, NAME, USER_ID, ICON FROM ACCOUNT WHERE USER_ID = ?";
@@ -126,10 +143,10 @@ public class AccountDAO {
 				String userId = rs.getString("USER_ID");
 				String pass = rs.getString("PASS");
 				String name = rs.getString("NAME");
-				String icon = rs.getNString("ICON");
+				String icon = rs.getString("ICON");
 				account = new Account(userId, pass, name, icon);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -137,11 +154,16 @@ public class AccountDAO {
 		return account;
 	}
 
-	public boolean deleteUserInfo(Account account) {
+	public boolean deleteUserInfo(Account account){
 		Account deletedAccount = null;
 
 		//データベースへ接続
-		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+		try {
+
+			//MySQL に接続する
+            Class.forName("com.mysql.jdbc.Driver");
+            //データベースに接続
+            Connection conn = DriverManager.getConnection(URL, USER, PASS);
 
 			//DELETE文を準備
 			String deleteSql = "DELETE FROM ACCOUNT WHERE USER_ID = ?";
@@ -174,7 +196,7 @@ public class AccountDAO {
 			}else {
 				return false;
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		}
