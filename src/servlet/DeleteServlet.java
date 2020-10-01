@@ -14,7 +14,7 @@ import model.Account;
 import model.DeleteLogic;
 import model.WrittenPost;
 
-@WebServlet("/DeleteServlet")
+@WebServlet("/delete")
 public class DeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +33,7 @@ public class DeleteServlet extends HttpServlet {
 				DeleteLogic bo = new DeleteLogic();
 				hasSucceed = bo.deletePost(writtenPost);
 				//リダイレクト
-				response.sendRedirect("/testJavaApp/PostsServlet");
+				response.sendRedirect("/ScratchPaper/posts");
 			}
 
 			//User削除
@@ -48,7 +48,7 @@ public class DeleteServlet extends HttpServlet {
 				session2.invalidate();
 
 				//リダイレクト
-				response.sendRedirect("/testJavaApp/IndexServlet");
+				response.sendRedirect("/ScratchPaper/index");
 			}
 
 			if (hasSucceed) {

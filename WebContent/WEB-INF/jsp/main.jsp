@@ -22,9 +22,9 @@
  </div>
  <div class="post-right">
  <div class="post-user-name">
-  <a href="/testJavaApp/UserServlet?userId=<%= writtenPost.getUserId()%>"><%= writtenPost.getName() %></a>
+  <a href="/ScratchPaper/user?userId=<%= writtenPost.getUserId()%>"><%= writtenPost.getName() %></a>
   </div>
-  <a href="/testJavaApp/PostsServlet?postId=<%= writtenPost.getPostId()%>"><%= writtenPost.getText() %></a>
+  <a href="/ScratchPaper/posts?postId=<%= writtenPost.getPostId()%>"><%= writtenPost.getText() %></a>
   </div>
   </div>
 <% } %>

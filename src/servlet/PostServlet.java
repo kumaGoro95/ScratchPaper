@@ -19,7 +19,7 @@ import model.PostGetLogic;
 import model.PostLogic;
 import model.WrittenPost;
 
-@WebServlet("/PostServlet")
+@WebServlet("/post")
 public class PostServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class PostServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		} else {
 			//未ログインならログイン画面へ
-			response.sendRedirect("/testJavaApp/LoginServlet");
+			response.sendRedirect("/ScratchPaper/login");
 		}
 	}
 
