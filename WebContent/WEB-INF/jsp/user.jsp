@@ -22,7 +22,7 @@
 <p><c:out value="${userAccount.userId}" /></p>
 <c:if test="${userAccount.userId == account.userId}" var="flg" />
 <c:if test="${flg}" >
-<a href="/testJavaApp/DeleteServlet?action=user">削除</a>
+<a href="/ScratchPaper/delete?action=user">削除</a>
 </c:if>
 </div>
 </div>

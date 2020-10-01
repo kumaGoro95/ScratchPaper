@@ -24,10 +24,10 @@
 <c:if test="${empty errorMsg}">
 150字以内で入力してください
 </c:if>
-<form action="/testJavaApp/PostServlet" method="post">
+<form action="/ScratchPaper/post" method="post">
 <textarea name="post">
 </textarea>
-<input type="submit" value="送信">
+<input type="submit" value="Send">
 </form>
 </div>
 </div>

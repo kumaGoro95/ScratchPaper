@@ -23,14 +23,13 @@
 </c:if>
 
 <c:if test="${empty errorMsg}">
-名前は4文字以上
-パスワードは半角英数字4文字以上で入力
+パスワードは半角英数字4文字以上で入力してください
 </c:if>
-<form action="/testJavaApp/SignupServlet" method="post">
+<form action="/ScratchPaper/signup" method="post">
 ユーザーID:<input type="text" name="userId"><br>
 名前:<input type="text" name="name"><br>
 パスワード:<input type="password" name="pass"><br>
-<input type="submit" value="登録">
+<input type="submit" value="Signup">
 </form>
 </div>
 </div>

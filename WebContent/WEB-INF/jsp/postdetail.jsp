@@ -22,7 +22,7 @@
 </p>
 <c:if test="${postDetail.userId == account.userId}" var="flg" />
 <c:if test="${flg}" >
-<a href="/testJavaApp/DeleteServlet?action=posts">削除</a>
+<a href="/ScratchPaper/delete?action=posts">削除</a>
 </c:if>
 </div>
 </div>

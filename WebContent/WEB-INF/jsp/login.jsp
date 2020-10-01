@@ -22,10 +22,10 @@
         </div>
       </c:if>
 
-<form action="/testJavaApp/LoginServlet" method="post">
+<form action="/ScratchPaper/login" method="post">
 ユーザーID:<input type="text" name="userId"><br>
 パスワード:<input type="password" name="pass"><br>
-<input type="submit" value="ログイン">
+<input type="submit" value="Login">
 </form>
 </div>
 </div>
