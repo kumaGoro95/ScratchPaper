@@ -1,6 +1,4 @@
-@media all and (min-device-width: 800px){
-
-
+@media all and (max-device-width: 799px) {
 
 /* Reset ================================ */
 * {
@@ -22,12 +20,12 @@ ul, li {
 a {
   text-decoration: none;
   color: #2d3133;
-  font-size: 14px;
+  font-size: 36px;
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  margin: 0;
-  color:#a9a9a9;
+  margin: 50px;
+  color:white;
 }
 
 input {
@@ -40,6 +38,7 @@ form input[type="submit"] {
   cursor: pointer;
 }
 
+
 /* Common Layout ================================ */
 body {
   color: #2d3133;
@@ -50,7 +49,7 @@ body {
 
 .main {
   position: absolute;
-  top: 100px;
+  top: 64px;
   width: 100%;
   height: auto;
   min-height: 100%;
@@ -67,28 +66,146 @@ body {
 
 /* Header ================================ */
 header {
-  height: 100px;
+  height: 130px;
   position: absolute;
   z-index: 1;
   width: 100%;
+  background-color: #66cdaa;
 }
 
 .header-logo {
   float: left;
-  padding: 10px 20px 20px;
+  padding: 10px 0px 20px;
   color: white;
-  font-size: 24px;
+  font-size: 44px;
   line-height: 0px;
 }
 
 .header-logo a{
   color: white;
-  font-size: 24px;
+  font-size: 44px;
 }
 
-.menu-icon{
-  visibility:hidden;
+
+  /****メニュー全体****/
+#menu{
+	/*配置*/
+	position:absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 100;
 }
+
+/****メニュー開閉ボタン****/
+#menu div{
+	/*デザイン*/
+	width: 110px;
+	height: 110px;
+	background: rgba(200,200,200,0.6);
+	/*配置*/
+	overflow: hidden;
+	position: absolute;
+	right:0;
+}
+
+#menu .menuopen{
+	/*デザイン*/
+	color: rgba(255,255,255,1);
+	font-size: 60px;
+	/*配置*/
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: auto;
+}
+
+#menu .menuclose{
+	/*デザイン*/
+	color: rgba(255,255,255,1);
+	font-size: 60px;
+	/*配置*/
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: auto;
+}
+
+/****メニュー一覧****/
+#menu ul{
+	/*デザイン*/
+	background: rgba(200,200,200,0.6);
+	width: 50%;
+	/*配置*/
+	position: absolute;
+	top: 90px;/*#menu divの高さ*/
+	right: 0;
+	display: none;
+	float: none;
+}
+
+#menu li{
+	/*デザイン*/
+	padding: 50px;
+	color: rgba(0,0,0,1);
+	border-bottom: 1px rgba(255,255,255,0.6) solid;
+	/*配置*/
+	pointer-events: auto;
+	float: none;
+	margin: 1px;
+}
+
+/****メニューオープン時****/
+#menu:target .menuopen{
+	/*配置*/
+	display: none;
+}
+
+#menu:target .menuclose{
+	/*配置*/
+	display: block;
+}
+
+#menu:target ul{
+	/*配置*/
+	display: block;
+}
+
+/*** メインエフェクト ***/
+#main{
+	/*デザイン*/
+	background: #fff;/*ページ背景色・背景画像はここで設定*/
+	/*アニメーション*/
+	-webkit-transition: all 0.3s ease 0s;
+	transition: all 0.3s ease 0s;
+}
+
+#menu:target ~ #main{
+	-webkit-filter:brightness(70%);
+	-moz-filter:brightness(70%);
+	-ms-filter:brightness(70%);
+	filter:brightness(70%);
+}
+
+/*  .header-menus li{
+    display:none;
+  }
+*/
+ .menu-icon{
+    visibility:visible;
+    padding:30px;
+    color:white;
+    size:34px;
+  }
+
 
 .header-menus {
   position:absolute;
@@ -98,18 +215,15 @@ header {
 }
 .header-menus li {
   float: left;
-  line-height: 20px;
-  font-size: 14px;
+  font-size: 32px;
   color: white;
   padding-left: 15px;
 }
 
 .header-menus a {
   float: left;
-  font-size: 14px;
   color: white;
 }
-
 
 /* Form ================================ */
 .form {
@@ -119,15 +233,16 @@ header {
   box-shadow: 0 2px 6px #c1ced7;
 }
 
-.form-heading h1{
+.form-heading{
   font-weight: 300;
-  margin: 60px 0 20px;
+  margin: 100px 0 60px;
   font-size: 48px;
   color: #bcc8d4;
 }
 
 .form-body {
   padding: 30px;
+  font-size:32px;
 }
 
 .form-error {
@@ -139,7 +254,7 @@ header {
   border: 1px solid #d8dadf;
   padding: 10px;
   color: #57575f;
-  font-size: 16px;
+  font-size: 32px;
   letter-spacing: 2px;
   border-radius: 2px;
 }
@@ -147,7 +262,7 @@ header {
 .form textarea {
   width: 100%;
   min-height: 110px;
-  font-size: 16px;
+  font-size: 32px;
   letter-spacing: 2px;
 }
 
@@ -169,6 +284,7 @@ header {
   clear: both;
 }
 
+
 /* users/index ================================ */
 .users-heading {
   font-weight: 300;
@@ -187,8 +303,8 @@ header {
 }
 
 .user-left img {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   border-radius: 40%;
   box-shadow: 0 2px 6px #c1ced7;
   object-fit: cover;
@@ -229,19 +345,23 @@ header {
   height: 80px;
   border-radius: 40%;
   box-shadow: 0 2px 6px #c1ced7;
-  margin: 20px 0 10px;
+  margin: 60px 0 10px;
   object-fit: cover;
 }
 
 .user h2 {
-  font-size: 20px;
+  font-size: 32px;
   font-weight: 600;
   line-height: 1.2;
+  color:black;
+  margin:30px;
 }
 
 .user p {
-  font-size: 13px;
+  font-size: 26px;
   margin-bottom: 15px;
+  color:black;
+  margin:30px;
 }
 
 .user a {
@@ -285,5 +405,4 @@ header {
 .users-form input {
   margin-bottom: 15px;
 }
-
 }

@@ -5,8 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name=”viewport” content=”width=device-width,initial-scale=1.0,minimum-scale=1.0″>
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/users.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/users-responsive.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
 <jsp:include page="/header.jsp" />
@@ -21,7 +24,7 @@
 <h2><c:out value="${userAccount.name}" /></h2>
 <p><c:out value="${userAccount.userId}" /></p>
 <c:if test="${userAccount.userId == account.userId}" var="flg" />
-<c:if test="${flg}" >
+<c:if test="${flg and userAccount.userId != 'guest'}" >
 <a href="/ScratchPaper/delete?action=user">削除</a>
 </c:if>
 </div>

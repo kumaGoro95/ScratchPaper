@@ -1,6 +1,9 @@
-@media all and (min-device-width: 800px){
+@media all and (max-device-width: 799px) {
 
 /* Reset ================================ */
+* {
+  box-sizing: border-box;
+}
 
 html {
   font-family:'Comic Sans MS';
@@ -17,11 +20,11 @@ ul, li {
 a {
   text-decoration: none;
   color: #2d3133;
-  font-size: 14px;
+  font-size: 36px;
 }
 
 h1, h2, h3, h4, h5, h6, p {
-  margin: 0;
+  margin: 50px;
   color:white;
 }
 
@@ -71,21 +74,136 @@ header {
 
 .header-logo {
   float: left;
-  padding: 10px 20px 20px;
+  padding: 10px 0px 20px;
   color: white;
-  font-size: 24px;
+  font-size: 44px;
   line-height: 0px;
 }
 
 .header-logo a{
   color: white;
-  font-size: 24px;
+  font-size: 44px;
 }
 
 
-.menu-icon{
-  visibility:hidden;
+  /****メニュー全体****/
+#menu{
+	/*配置*/
+	position:absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 100;
 }
+
+/****メニュー開閉ボタン****/
+#menu div{
+	/*デザイン*/
+	width: 110px;
+	height: 110px;
+	background: rgba(200,200,200,0.6);
+	/*配置*/
+	overflow: hidden;
+	position: absolute;
+	right:0;
+}
+
+#menu .menuopen{
+	/*デザイン*/
+	color: rgba(255,255,255,1);
+	font-size: 60px;
+	/*配置*/
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: auto;
+}
+
+#menu .menuclose{
+	/*デザイン*/
+	color: rgba(255,255,255,1);
+	font-size: 60px;
+	/*配置*/
+	display: none;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	pointer-events: auto;
+}
+
+/****メニュー一覧****/
+#menu ul{
+	/*デザイン*/
+	background: rgba(200,200,200,0.6);
+	width: 50%;
+	/*配置*/
+	position: absolute;
+	top: 90px;/*#menu divの高さ*/
+	right: 0;
+	display: none;
+	float: none;
+}
+
+#menu li{
+	/*デザイン*/
+	padding: 50px;
+	color: rgba(0,0,0,1);
+	border-bottom: 1px rgba(255,255,255,0.6) solid;
+	/*配置*/
+	pointer-events: auto;
+	float: none;
+	margin: 1px;
+}
+
+/****メニューオープン時****/
+#menu:target .menuopen{
+	/*配置*/
+	display: none;
+}
+
+#menu:target .menuclose{
+	/*配置*/
+	display: block;
+}
+
+#menu:target ul{
+	/*配置*/
+	display: block;
+}
+
+/*** メインエフェクト ***/
+#main{
+	/*デザイン*/
+	background: #fff;/*ページ背景色・背景画像はここで設定*/
+	/*アニメーション*/
+	-webkit-transition: all 0.3s ease 0s;
+	transition: all 0.3s ease 0s;
+}
+
+#menu:target ~ #main{
+	-webkit-filter:brightness(70%);
+	-moz-filter:brightness(70%);
+	-ms-filter:brightness(70%);
+	filter:brightness(70%);
+}
+
+/*  .header-menus li{
+    display:none;
+  }
+*/
+ .menu-icon{
+    visibility:visible;
+    padding:30px;
+    color:white;
+    size:34px;
+  }
 
 
 .header-menus {
@@ -96,15 +214,13 @@ header {
 }
 .header-menus li {
   float: left;
-  line-height: 20px;
-  font-size: 14px;
+  font-size: 32px;
   color: white;
   padding-left: 15px;
 }
 
 .header-menus a {
   float: left;
-  font-size: 14px;
   color: white;
 }
 
@@ -126,15 +242,15 @@ header {
 }
 
 .top-main h2 {
-  font-size: 60px;
+  font-size: 62px;
   font-weight: 500;
   line-height: 1.3;
   -webkit-font-smoothing: antialiased;
-  margin-bottom: 20px;
+  margin:80px 0px 40px;
 }
 
 .top-main p {
-  font-size: 24px;
+  font-size: 40px;
 }
 
 .btn{
@@ -146,6 +262,7 @@ header {
   opacity:0.8;
   cursor:pointer;
   transition:all 0.5s;
+  width:80%;
 }
 
 .btn:hover{
@@ -165,8 +282,8 @@ header {
 }
 
 .guest form input[type="image"]{
-  width: 100px;
-  height: 100px;
+  width: 160px;
+  height: 160px;
   border-radius: 20%;
   box-shadow: 0 2px 6px #c1ced7;
   object-fit: cover;
