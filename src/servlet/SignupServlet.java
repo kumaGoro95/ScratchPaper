@@ -14,7 +14,7 @@ import model.Account;
 import model.SignupLogic;
 import model.User;
 
-@WebServlet("/SignupServlet")
+@WebServlet("/signup")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +27,7 @@ public class SignupServlet extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 			dispatcher.forward(request, response);
 		} else {
-			response.sendRedirect("/testJavaApp/PostsServlet");
+			response.sendRedirect("/ScratchPaper/postst");
 		}
 	}
 
@@ -64,10 +64,10 @@ public class SignupServlet extends HttpServlet {
 			session.setAttribute("account", account);
 
 			//リダイレクト
-			response.sendRedirect("/testJavaApp/PostsServlet");
+			response.sendRedirect("/ScratchPaper/posts");
 		} else { //登録失敗時
 			//エラーメッセージをリクエストスコープに保存
-			request.setAttribute("errorMsg", "ユーザー名、またはパスワードが不正です");
+			request.setAttribute("errorMsg", "既に同じユーザーがいます");
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp");
 			dispatcher.forward(request, response);

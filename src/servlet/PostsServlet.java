@@ -19,7 +19,7 @@ import model.Post;
 import model.PostGetLogic;
 import model.WrittenPost;
 
-@WebServlet("/PostsServlet")
+@WebServlet("/posts")
 public class PostsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -56,7 +56,7 @@ public class PostsServlet extends HttpServlet {
 
 		if(loginUser == null) {  //ログインしていない場合
 			//リダイレクト
-			response.sendRedirect("/testJavaApp/LoginServlet");
+			response.sendRedirect("/ScratchPaper/login");
 		}else {  //ログイン済の場合
 			//フォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/main.jsp");

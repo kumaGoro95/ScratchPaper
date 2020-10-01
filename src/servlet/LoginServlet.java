@@ -14,7 +14,7 @@ import model.Account;
 import model.LoginLogic;
 import model.User;
 
-@WebServlet("/LoginServlet")
+@WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,8 +36,10 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//リクエストパラメータの取得
 		request.setCharacterEncoding("UTF-8");
+
 		String userId = request.getParameter("userId");
 		String pass = request.getParameter("pass");
+
 		//ログイン処理の実行
 		User user = new User(userId,pass);
 		LoginLogic bo = new LoginLogic();
@@ -51,7 +53,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("account", account);
 
 			//リダイレクト
-			response.sendRedirect("/testJavaApp/PostsServlet");
+			response.sendRedirect("/ScratchPaper/posts");
 		}else { //ログイン失敗時
 			//エラーメッセージをリクエストスコープに保存
 			request.setAttribute("errorMsg", "ユーザー名、またはパスワードが間違っています");
