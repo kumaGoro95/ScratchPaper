@@ -22,21 +22,21 @@
             <a href="/ScratchPaper/user?userId=${account.userId}">${account.name}</a>
           </li>
           <li>
-            <a href="/ScratchPaper/posts">Posts</a>
+            <a href="/ScratchPaper/posts">投稿一覧</a>
           </li>
           <li>
-            <a href="/ScratchPaper/post">NewPost</a>
+            <a href="/ScratchPaper/post">投稿する</a>
           </li>
           <li>
-            <a href="/ScratchPaper/logout">Logout</a>
+            <a href="/ScratchPaper/logout">ログアウト</a>
           </li>
         </c:when>
           <c:otherwise>
           <li>
-            <a href="/ScratchPaper/signup">Signup</a>
+            <a href="/ScratchPaper/signup">会員登録</a>
           </li>
           <li>
-            <a href="/ScratchPaper/login">Login</a>
+            <a href="/ScratchPaper/login">ログイン</a>
           </li>
         </c:otherwise>
         </c:choose>

@@ -164,12 +164,10 @@ header {
   box-shadow: 2px 4px #b22222;
 }
 
-.guest form input[type="image"]{
-  width: 100px;
-  height: 100px;
-  border-radius: 20%;
-  box-shadow: 0 2px 6px #c1ced7;
-  object-fit: cover;
+.guest-login{
+  padding:12px 30px;
+  background-color:#006400;
+  box-shadow: 2px 4px #3cb371;
 }
 
 }

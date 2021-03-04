@@ -281,12 +281,10 @@ header {
   box-shadow: 2px 4px #b22222;
 }
 
-.guest form input[type="image"]{
-  width: 160px;
-  height: 160px;
-  border-radius: 20%;
-  box-shadow: 0 2px 6px #c1ced7;
-  object-fit: cover;
+.guest-login input{
+  padding:12px 36px;
+  background-color:#2e8b57;
+  box-shadow: 2px 4px #3cb371;
 }
 
 }
