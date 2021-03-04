@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name=”viewport” content=”width=device-width,initial-scale=1.0,minimum-scale=1.0″>
-<title>テストアプリ</title>
+<title>Scratch Paper</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/users.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/users-responsive.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -16,7 +16,7 @@
 
 <div class="main users-new">
   <div class="container">
-    <h1 class="form-heading">Login</h1>
+    <h1 class="form-heading">ログイン</h1>
     <div class="form users-form">
     <div class="form-body">
       <c:if test="${not empty errorMsg}">
@@ -28,7 +28,7 @@
 <form action="/ScratchPaper/login" method="post">
 ユーザーID:<input type="text" name="userId"><br>
 パスワード:<input type="password" name="pass"><br>
-<input type="submit" value="Login">
+<input type="submit" value="ログイン">
 </form>
 </div>
 </div>
