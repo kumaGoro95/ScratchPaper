@@ -10,6 +10,7 @@ Webアプリの構造を学ぶため、フレームワークを使用せずサ�
  # URL
  
  https://www.scratch-paper.work/ScratchPaper/
+ 
  ゲストログインボタンから、メールアドレスとパスワードを入力せずにログインできます。
  
  # 使用技術
