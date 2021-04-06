@@ -285,6 +285,10 @@ header {
 
 
 /* posts/new ================================ */
+.posts-show .container{
+  margin: 120px auto;
+}
+
 .posts-show form {
   display: inline;
 }
